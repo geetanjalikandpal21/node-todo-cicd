@@ -1,3 +1,19 @@
+# Installation on EC2 Instance
+
+Install Jenkins, configure Docker as agent, set up cicd and much more.
+
+## AWS EC2 Instance
+- Go to AWS Console
+- Instances(running)
+- Launch EC2 instances
+
+![image](https://github.com/user-attachments/assets/41bd626d-ec7c-4f73-bd7b-3c90dc70499f)
+
+**Security Group(Ports need to be opened)**
+
+<img width="1440" alt="Screenshot 2024-08-07 at 1 23 05 AM" src="https://github.com/user-attachments/assets/2cf532c9-b623-4884-9d15-2f6764906fbb">
+
+
 ## Jenkins
 
 **Pre-Requisites:**
@@ -71,9 +87,48 @@ After you login to Jenkins,
 
 ![image](https://github.com/user-attachments/assets/da874fb0-7fff-4ca5-89db-3e7fc3212a8f)
 
-**If you sign-in again the following screen will be displayed**
+**Login to Jenkins by provided previously created credentials**
+
+<img width="1440" alt="Screenshot 2024-08-07 at 1 04 17 AM" src="https://github.com/user-attachments/assets/3f47714c-e5dc-4dcc-a380-bc8671385593">
+
+**The dashboard will look like this after successfully creating pipeline**
+
+<img width="1440" alt="Screenshot 2024-08-07 at 1 06 22 AM" src="https://github.com/user-attachments/assets/ebcb701a-8ff6-4f49-88b5-24f1b79fcffd">
+
+
+## Install the Docker Pipeline plugin in Jenkins:
+
+- Log in to Jenkins.
+- Go to Manage Jenkins > Manage Plugins.
+- In the Available tab, search for "Docker Pipeline".
+- Select the plugin and click the Install button.
+- Restart Jenkins after the plugin is installed.
+
+<img width="1440" alt="Screenshot 2024-08-07 at 1 16 26 AM" src="https://github.com/user-attachments/assets/204a467f-aae5-404e-80e6-eef7df97db80">
+
+
+Wait for the Jenkins to be restarted.
 
 
 
+## Docker Slave Configuration
 
+Run the below command to Install Docker
 
+```
+sudo apt update
+sudo apt install docker.io
+```
+
+Grant Jenkins user and Ubuntu user permission to docker deamon.
+```
+sudo su - 
+usermod -aG docker jenkins
+usermod -aG docker ubuntu
+systemctl restart docker
+```
+Once you are done with the above steps, it is better to restart Jenkins.
+```
+http://<ec2-instance-public-ip>:8080/restart
+```
+The docker agent configuration is now successful.
